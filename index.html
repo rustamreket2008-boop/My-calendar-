@@ -1,1 +1,342 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Calendar</title>
 
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  background:linear-gradient(135deg,#020617,#1e3a8a,#2563eb);
+  transition:.4s;
+}
+
+body.light{
+  background:linear-gradient(135deg,#dbeafe,#eff6ff,#bfdbfe);
+}
+
+.app{
+  width:100%;
+  max-width:440px;
+  padding:22px;
+  border-radius:30px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 60px #0008;
+  color:white;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.top button{
+  width:43px;
+  height:43px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.clock{
+  text-align:center;
+  font-size:42px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.dateNow{
+  text-align:center;
+  opacity:.8;
+  margin-bottom:25px;
+}
+
+.calendar{
+  background:rgba(255,255,255,.95);
+  color:#0f172a;
+  padding:20px;
+  border-radius:25px;
+}
+
+.month{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.month h2{
+  font-size:21px;
+}
+
+.month button{
+  width:40px;
+  height:40px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.week{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.week div{
+  color:#64748b;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+.day{
+  height:43px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.day:hover{
+  background:#dbeafe;
+  transform:scale(1.05);
+}
+
+.today{
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+  box-shadow:0 5px 15px #2563eb66;
+}
+
+.empty{
+  height:43px;
+}
+
+.bottom{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+
+.todayBtn{
+  flex:1;
+  padding:13px;
+  border:0;
+  border-radius:14px;
+  background:#0f172a;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.selected{
+  margin-top:15px;
+  padding:14px;
+  border-radius:14px;
+  background:#eff6ff;
+  text-align:center;
+  color:#1e40af;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="top">
+    <div class="logo">📅 My Calendar</div>
+    <button onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <div class="clock" id="clock">00:00</div>
+  <div class="dateNow" id="dateNow"></div>
+
+  <div class="calendar">
+
+    <div class="month">
+      <button onclick="changeMonth(-1)">‹</button>
+      <h2 id="monthYear"></h2>
+      <button onclick="changeMonth(1)">›</button>
+    </div>
+
+    <div class="week">
+      <div>Дш</div>
+      <div>Сш</div>
+      <div>Чш</div>
+      <div>Пш</div>
+      <div>Ҷм</div>
+      <div>Шб</div>
+      <div>Як</div>
+    </div>
+
+    <div class="days" id="days"></div>
+
+    <div class="bottom">
+      <button class="todayBtn" onclick="goToday()">
+        📍 Имрӯз
+      </button>
+    </div>
+
+    <div class="selected" id="selected">
+      Рӯзро интихоб кунед
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let current = new Date();
+
+const months = [
+"Январ","Феврал","Март","Апрел",
+"Май","Июн","Июл","Август",
+"Сентябр","Октябр","Ноябр","Декабр"
+];
+
+function calendar(){
+
+  let year=current.getFullYear();
+  let month=current.getMonth();
+
+  document.getElementById("monthYear").textContent =
+    months[month]+" "+year;
+
+  let box=document.getElementById("days");
+  box.innerHTML="";
+
+  let firstDay=new Date(year,month,1).getDay();
+
+  firstDay=firstDay===0?6:firstDay-1;
+
+  let totalDays=new Date(year,month+1,0).getDate();
+
+  for(let i=0;i<firstDay;i++){
+
+    let empty=document.createElement("div");
+    empty.className="empty";
+    box.appendChild(empty);
+
+  }
+
+  let today=new Date();
+
+  for(let d=1;d<=totalDays;d++){
+
+    let day=document.createElement("div");
+
+    day.className="day";
+
+    day.textContent=d;
+
+    if(
+      d===today.getDate() &&
+      month===today.getMonth() &&
+      year===today.getFullYear()
+    ){
+      day.classList.add("today");
+    }
+
+    day.onclick=function(){
+
+      document.getElementById("selected").textContent =
+        "📅 "+d+" "+months[month]+" "+year;
+
+    };
+
+    box.appendChild(day);
+  }
+}
+
+function changeMonth(value){
+
+  current.setMonth(current.getMonth()+value);
+
+  calendar();
+
+}
+
+function goToday(){
+
+  current=new Date();
+
+  calendar();
+
+}
+
+function updateClock(){
+
+  let now=new Date();
+
+  let h=String(now.getHours()).padStart(2,"0");
+  let m=String(now.getMinutes()).padStart(2,"0");
+  let s=String(now.getSeconds()).padStart(2,"0");
+
+  document.getElementById("clock").textContent =
+    h+":"+m+":"+s;
+
+  document.getElementById("dateNow").textContent =
+    now.toLocaleDateString("tg-TJ",{
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    });
+}
+
+function toggleTheme(){
+
+  document.body.classList.toggle("light");
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+calendar();
+
+</script>
+
+</body>
+  </html>
