@@ -3,177 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Calendar</title>
+
+<title>VAQTI NAMOZ</title>
 
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:15px;
-  background:linear-gradient(135deg,#020617,#1e3a8a,#2563eb);
-  transition:.4s;
-}
-
-body.light{
-  background:linear-gradient(135deg,#dbeafe,#eff6ff,#bfdbfe);
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#061b16,#0b3d2e,#071c25);
+    color:white;
+    padding:18px;
 }
 
 .app{
-  width:100%;
-  max-width:440px;
-  padding:22px;
-  border-radius:30px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.25);
-  backdrop-filter:blur(20px);
-  box-shadow:0 25px 60px #0008;
-  color:white;
+    width:100%;
+    max-width:460px;
+    margin:auto;
+    padding:22px;
+    border-radius:30px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 70px rgba(0,0,0,.4);
 }
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
 .logo{
-  font-size:24px;
-  font-weight:bold;
+    width:55px;
+    height:55px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    background:rgba(255,255,255,.14);
 }
 
-.top button{
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:50%;
-  background:rgba(255,255,255,.18);
-  color:white;
-  font-size:20px;
-  cursor:pointer;
+.title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.title h1{
+    font-size:21px;
+}
+
+.title p{
+    font-size:12px;
+    opacity:.65;
+    margin-top:4px;
+}
+
+.theme{
+    width:48px;
+    height:48px;
+    border:0;
+    border-radius:16px;
+    background:rgba(255,255,255,.13);
+    color:white;
+    font-size:21px;
+}
+
+.clockBox{
+    text-align:center;
+    padding:22px 10px;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    margin-bottom:18px;
 }
 
 .clock{
-  text-align:center;
-  font-size:42px;
-  font-weight:bold;
-  margin-bottom:5px;
+    font-size:42px;
+    font-weight:bold;
+    letter-spacing:2px;
 }
 
-.dateNow{
-  text-align:center;
-  opacity:.8;
-  margin-bottom:25px;
+.date{
+    margin-top:8px;
+    opacity:.7;
+    font-size:14px;
 }
 
-.calendar{
-  background:rgba(255,255,255,.95);
-  color:#0f172a;
-  padding:20px;
-  border-radius:25px;
+.next{
+    padding:18px;
+    border-radius:23px;
+    background:rgba(255,255,255,.12);
+    margin-bottom:18px;
 }
 
-.month{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
+.nextTitle{
+    font-size:13px;
+    opacity:.65;
 }
 
-.month h2{
-  font-size:21px;
+.nextPrayer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:8px;
 }
 
-.month button{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:12px;
-  background:#2563eb;
-  color:white;
-  font-size:22px;
-  cursor:pointer;
+.nextPrayer b{
+    font-size:23px;
 }
 
-.week{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  text-align:center;
-  margin-bottom:8px;
+.countdown{
+    font-size:15px;
+    opacity:.8;
 }
 
-.week div{
-  color:#64748b;
-  font-size:12px;
-  font-weight:bold;
+.prayer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:17px;
+    margin:9px 0;
+    border-radius:20px;
+    background:rgba(255,255,255,.08);
+    transition:.25s;
 }
 
-.days{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
+.prayer:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.14);
 }
 
-.day{
-  height:43px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.2s;
+.prayer.active{
+    background:rgba(255,255,255,.20);
+    border:1px solid rgba(255,255,255,.25);
 }
 
-.day:hover{
-  background:#dbeafe;
-  transform:scale(1.05);
+.left{
+    display:flex;
+    align-items:center;
+    gap:13px;
 }
 
-.today{
-  background:#2563eb;
-  color:white;
-  font-weight:bold;
-  box-shadow:0 5px 15px #2563eb66;
+.icon{
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,.12);
+    font-size:21px;
 }
 
-.empty{
-  height:43px;
+.name{
+    font-size:16px;
+    font-weight:bold;
 }
 
-.bottom{
-  display:flex;
-  gap:10px;
-  margin-top:18px;
+.desc{
+    font-size:11px;
+    opacity:.5;
+    margin-top:4px;
 }
 
-.todayBtn{
-  flex:1;
-  padding:13px;
-  border:0;
-  border-radius:14px;
-  background:#0f172a;
-  color:white;
-  font-size:15px;
-  cursor:pointer;
+.time{
+    font-size:21px;
+    font-weight:bold;
 }
 
-.selected{
-  margin-top:15px;
-  padding:14px;
-  border-radius:14px;
-  background:#eff6ff;
-  text-align:center;
-  color:#1e40af;
-  font-weight:bold;
+.city{
+    margin-top:18px;
+    text-align:center;
+    padding:14px;
+    border-radius:17px;
+    background:rgba(255,255,255,.08);
+    font-size:14px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    font-size:11px;
+    opacity:.4;
+}
+
+.light{
+    background:linear-gradient(135deg,#b8f2dc,#d7f7ed,#b8dfe8);
+    color:#123;
+}
+
+.light .app{
+    background:rgba(255,255,255,.35);
+    border-color:rgba(255,255,255,.5);
+}
+
+.light .clockBox,
+.light .next,
+.light .prayer,
+.light .city,
+.light .theme,
+.light .logo{
+    background:rgba(255,255,255,.4);
+}
+
+button{
+    cursor:pointer;
 }
 </style>
 </head>
@@ -182,159 +224,282 @@ body.light{
 
 <div class="app">
 
-  <div class="top">
-    <div class="logo">📅 My Calendar</div>
-    <button onclick="toggleTheme()">🌙</button>
-  </div>
+    <div class="header">
 
-  <div class="clock" id="clock">00:00</div>
-  <div class="dateNow" id="dateNow"></div>
+        <div class="title">
 
-  <div class="calendar">
+            <div class="logo">🕌</div>
 
-    <div class="month">
-      <button onclick="changeMonth(-1)">‹</button>
-      <h2 id="monthYear"></h2>
-      <button onclick="changeMonth(1)">›</button>
+            <div>
+                <h1>VAQTI NAMOZ</h1>
+                <p>Вақтҳои намоз</p>
+            </div>
+
+        </div>
+
+        <button class="theme" onclick="theme()">🌙</button>
+
     </div>
 
-    <div class="week">
-      <div>Дш</div>
-      <div>Сш</div>
-      <div>Чш</div>
-      <div>Пш</div>
-      <div>Ҷм</div>
-      <div>Шб</div>
-      <div>Як</div>
+
+    <div class="clockBox">
+
+        <div class="clock" id="clock">
+            00:00:00
+        </div>
+
+        <div class="date" id="date">
+            -
+        </div>
+
     </div>
 
-    <div class="days" id="days"></div>
 
-    <div class="bottom">
-      <button class="todayBtn" onclick="goToday()">
-        📍 Имрӯз
-      </button>
+    <div class="next">
+
+        <div class="nextTitle">
+            НАМОЗИ НАВБАТӢ
+        </div>
+
+        <div class="nextPrayer">
+
+            <b id="nextName">Бомдод</b>
+
+            <div class="countdown" id="countdown">
+                -
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="selected" id="selected">
-      Рӯзро интихоб кунед
+
+    <div class="prayer active">
+
+        <div class="left">
+
+            <div class="icon">🌅</div>
+
+            <div>
+                <div class="name">Бомдод</div>
+                <div class="desc">Субҳ</div>
+            </div>
+
+        </div>
+
+        <div class="time">05:10</div>
+
     </div>
 
-  </div>
+
+    <div class="prayer">
+
+        <div class="left">
+
+            <div class="icon">☀️</div>
+
+            <div>
+                <div class="name">Пешин</div>
+                <div class="desc">Нимаи рӯз</div>
+            </div>
+
+        </div>
+
+        <div class="time">12:30</div>
+
+    </div>
+
+
+    <div class="prayer">
+
+        <div class="left">
+
+            <div class="icon">🌤️</div>
+
+            <div>
+                <div class="name">Аср</div>
+                <div class="desc">Баъд аз пешин</div>
+            </div>
+
+        </div>
+
+        <div class="time">16:00</div>
+
+    </div>
+
+
+    <div class="prayer">
+
+        <div class="left">
+
+            <div class="icon">🌅</div>
+
+            <div>
+                <div class="name">Шом</div>
+                <div class="desc">Ғуруби офтоб</div>
+            </div>
+
+        </div>
+
+        <div class="time">18:20</div>
+
+    </div>
+
+
+    <div class="prayer">
+
+        <div class="left">
+
+            <div class="icon">🌙</div>
+
+            <div>
+                <div class="name">Хуфтан</div>
+                <div class="desc">Шаб</div>
+            </div>
+
+        </div>
+
+        <div class="time">19:45</div>
+
+    </div>
+
+
+    <div class="city">
+        📍 Шаҳр: Тоҷикистон
+    </div>
+
+
+    <div class="footer">
+        VAQTI NAMOZ • 2026
+    </div>
 
 </div>
 
+
 <script>
-
-let current = new Date();
-
-const months = [
-"Январ","Феврал","Март","Апрел",
-"Май","Июн","Июл","Август",
-"Сентябр","Октябр","Ноябр","Декабр"
-];
-
-function calendar(){
-
-  let year=current.getFullYear();
-  let month=current.getMonth();
-
-  document.getElementById("monthYear").textContent =
-    months[month]+" "+year;
-
-  let box=document.getElementById("days");
-  box.innerHTML="";
-
-  let firstDay=new Date(year,month,1).getDay();
-
-  firstDay=firstDay===0?6:firstDay-1;
-
-  let totalDays=new Date(year,month+1,0).getDate();
-
-  for(let i=0;i<firstDay;i++){
-
-    let empty=document.createElement("div");
-    empty.className="empty";
-    box.appendChild(empty);
-
-  }
-
-  let today=new Date();
-
-  for(let d=1;d<=totalDays;d++){
-
-    let day=document.createElement("div");
-
-    day.className="day";
-
-    day.textContent=d;
-
-    if(
-      d===today.getDate() &&
-      month===today.getMonth() &&
-      year===today.getFullYear()
-    ){
-      day.classList.add("today");
-    }
-
-    day.onclick=function(){
-
-      document.getElementById("selected").textContent =
-        "📅 "+d+" "+months[month]+" "+year;
-
-    };
-
-    box.appendChild(day);
-  }
-}
-
-function changeMonth(value){
-
-  current.setMonth(current.getMonth()+value);
-
-  calendar();
-
-}
-
-function goToday(){
-
-  current=new Date();
-
-  calendar();
-
-}
 
 function updateClock(){
 
-  let now=new Date();
+    const now = new Date();
 
-  let h=String(now.getHours()).padStart(2,"0");
-  let m=String(now.getMinutes()).padStart(2,"0");
-  let s=String(now.getSeconds()).padStart(2,"0");
+    let h = String(now.getHours()).padStart(2,"0");
+    let m = String(now.getMinutes()).padStart(2,"0");
+    let s = String(now.getSeconds()).padStart(2,"0");
 
-  document.getElementById("clock").textContent =
-    h+":"+m+":"+s;
+    document.getElementById("clock").textContent =
+        h + ":" + m + ":" + s;
 
-  document.getElementById("dateNow").textContent =
-    now.toLocaleDateString("tg-TJ",{
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric"
-    });
+    document.getElementById("date").textContent =
+        now.toLocaleDateString("tg-TJ",{
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
 }
 
-function toggleTheme(){
 
-  document.body.classList.toggle("light");
+function theme(){
 
+    document.body.classList.toggle("light");
+
+    const btn =
+        document.querySelector(".theme");
+
+    if(document.body.classList.contains("light")){
+        btn.textContent="☀️";
+    }else{
+        btn.textContent="🌙";
+    }
 }
 
-setInterval(updateClock,1000);
+
+function updateNextPrayer(){
+
+    const now = new Date();
+
+    const prayers = [
+        {name:"Бомдод",time:"05:10"},
+        {name:"Пешин",time:"12:30"},
+        {name:"Аср",time:"16:00"},
+        {name:"Шом",time:"18:20"},
+        {name:"Хуфтан",time:"19:45"}
+    ];
+
+    let next = null;
+
+    for(let p of prayers){
+
+        const parts = p.time.split(":");
+
+        const t = new Date();
+
+        t.setHours(
+            Number(parts[0]),
+            Number(parts[1]),
+            0,
+            0
+        );
+
+        if(t > now){
+            next = {
+                name:p.name,
+                date:t
+            };
+            break;
+        }
+    }
+
+    if(!next){
+
+        const parts = prayers[0].time.split(":");
+
+        const tomorrow = new Date();
+
+        tomorrow.setDate(
+            tomorrow.getDate()+1
+        );
+
+        tomorrow.setHours(
+            Number(parts[0]),
+            Number(parts[1]),
+            0,
+            0
+        );
+
+        next = {
+            name:prayers[0].name,
+            date:tomorrow
+        };
+    }
+
+    document.getElementById("nextName").textContent =
+        next.name;
+
+    let difference =
+        next.date - now;
+
+    let hours =
+        Math.floor(difference / 3600000);
+
+    let minutes =
+        Math.floor((difference % 3600000) / 60000);
+
+    let seconds =
+        Math.floor((difference % 60000) / 1000);
+
+    document.getElementById("countdown").textContent =
+        hours + " соат " +
+        minutes + " дақ " +
+        seconds + " сония";
+}
+
 
 updateClock();
+updateNextPrayer();
 
-calendar();
+setInterval(updateClock,1000);
+setInterval(updateNextPrayer,1000);
 
 </script>
 
