@@ -1,4 +1,4 @@
-name: Build VAQTI NAMOZ APK
+name: Build VAQTII NAMOZ APK
 
 on:
   workflow_dispatch:
